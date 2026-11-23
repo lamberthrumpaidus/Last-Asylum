@@ -4,7 +4,15 @@
 
 **Game survival 3D berbasis browser**
 
+**[Mainkan LAST ASYLUM secara online](https://lastasylumgame.netlify.app/)**
+
 </div>
+
+## Website Resmi
+
+LAST ASYLUM dapat dimainkan langsung melalui website resmi:
+
+**https://lastasylumgame.netlify.app/**
 
 ## Tentang LAST ASYLUM
 
