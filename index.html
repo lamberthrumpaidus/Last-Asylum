@@ -1,0 +1,113 @@
+<!-- create by LamberthRumpaidus -->
+<!doctype html>
+<html lang="id"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,viewport-fit=cover,user-scalable=no"><title>LAST ASYLUM</title>
+<style>
+/* create by LamberthRumpaidus */
+
+:root{color-scheme:dark;--gold:#f2d39a;--mint:#81dfcf;--ink:#081713}*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}html,body{width:100%;height:100%;overflow:hidden;margin:0;background:#07130f;color:#f6f1e0;font-family:Inter,system-ui,-apple-system,Segoe UI,Arial,sans-serif;touch-action:none;user-select:none}#app,#scene{position:fixed;inset:0;width:100%;height:100%}#scene{display:block;touch-action:none}#app:after{content:"";position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse at center,transparent 48%,#0006 100%);mix-blend-mode:multiply}button{font:inherit;cursor:pointer}button:disabled{opacity:.38;cursor:not-allowed}.hud{position:absolute;inset:0;pointer-events:none;z-index:4}.top{position:absolute;top:calc(13px + env(safe-area-inset-top));left:clamp(12px,3vw,35px);right:clamp(12px,3vw,35px);display:flex;align-items:flex-start;justify-content:space-between;gap:8px}.menu-btn{pointer-events:auto;display:grid;place-items:center;border:1px solid #f2d69b75;border-radius:15px;width:47px;height:47px;background:#10251edb;color:#ecd8ad;font-size:26px;box-shadow:0 7px 22px #0007;backdrop-filter:blur(7px)}.stats{display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end;max-width:min(80vw,510px)}.metric{min-width:85px;display:flex;align-items:center;gap:9px;background:#0a1c18cc;border:1px solid #e6d9ae38;backdrop-filter:blur(12px);border-radius:13px;padding:7px 11px;box-shadow:0 8px 18px #0005;font-size:13px;color:#b7c9ba}.metric b{display:block;color:#fff5da;font-size:19px;line-height:1.1;font-variant-numeric:tabular-nums}.metric .symbol{font-size:22px;filter:drop-shadow(0 2px 2px #000)}.center-top{position:absolute;top:calc(75px + env(safe-area-inset-top));left:50%;transform:translateX(-50%);text-align:center;width:max-content;max-width:94%;background:#06150eb9;border:1px solid #c6ba8c3c;padding:9px 16px;border-radius:14px;backdrop-filter:blur(10px)}#objective{font-size:11px;letter-spacing:.16em;color:#d6c79c;font-weight:800;text-transform:uppercase}#wave{font-size:12px;margin-top:3px;color:#d8ded1}.bottom{position:absolute;bottom:calc(19px + env(safe-area-inset-bottom));left:0;right:0;display:flex;align-items:flex-end;justify-content:space-between;padding:0 clamp(16px,4vw,58px);gap:15px}.joystick{pointer-events:auto;width:126px;height:126px;border-radius:50%;position:relative;background:#09221f52;border:2px solid #b9f6e35d;box-shadow:inset 0 0 30px #48e2bd11,0 0 25px #0007;touch-action:none;flex-shrink:0}.joy-mark{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);height:43px;width:43px;border:2px solid #d0fbeb7b;border-radius:50%;background:#addacd2e;box-shadow:0 0 28px #58f5ce35}.action-stack{display:flex;align-items:flex-end;gap:9px;pointer-events:auto}.action-btn{border:1px solid #8ee6d7aa;color:#e6fff8;background:#12382ec9;backdrop-filter:blur(8px);border-radius:50%;width:63px;height:63px;font-size:25px;display:grid;place-items:center;box-shadow:inset 0 0 20px #2aeece23,0 8px 22px #0007}.action-btn.dash{width:75px;height:75px;background:linear-gradient(145deg,#277468df,#0b302acb);font-size:29px}.action-btn.cooldown{opacity:.35}.action-btn:active,.menu-btn:active{transform:scale(.94)}#interact{position:absolute;pointer-events:auto;bottom:calc(111px + env(safe-area-inset-bottom));right:clamp(16px,4vw,60px);background:linear-gradient(140deg,#b18b43,#61451f);border:1px solid #ffe1a6;color:#fff3d4;border-radius:12px;padding:12px 17px;font-size:13px;font-weight:850;max-width:220px;text-align:center;box-shadow:0 6px 18px #0008}#interact[hidden]{display:none}#toast{position:absolute;bottom:calc(155px + env(safe-area-inset-bottom));left:50%;transform:translateX(-50%) translateY(10px);border:1px solid #dfd4a75d;border-radius:12px;background:#101d18df;padding:11px 18px;color:#f0d7a2;font-weight:750;font-size:13px;max-width:80%;text-align:center;opacity:0;transition:.2s;white-space:pre-line;pointer-events:none}#toast.show{opacity:1;transform:translateX(-50%) translateY(0)}.healthbar{position:absolute;bottom:calc(6px + env(safe-area-inset-bottom));left:50%;transform:translateX(-50%);width:170px;height:5px;border-radius:9px;overflow:hidden;background:#111f1b}#healthfill{width:100%;height:100%;background:linear-gradient(90deg,#efb56a,#69e7c3);transition:width .15s}#help{position:absolute;bottom:calc(151px + env(safe-area-inset-bottom));left:clamp(17px,4vw,55px);max-width:165px;font-size:11px;color:#c2d4c9a6;line-height:1.55;text-shadow:0 2px 2px #000;transition:opacity .5s}
+.overlay{position:absolute;inset:0;z-index:12;display:flex;align-items:center;justify-content:center;background:linear-gradient(125deg,#07110ed9,#091a15b9);backdrop-filter:blur(11px);padding:24px}.overlay[hidden]{display:none}.panel{width:min(450px,100%);max-height:94vh;overflow-y:auto;-ms-overflow-style:none;scrollbar-width:none;border:1px solid #d7b77f65;border-radius:25px;background:linear-gradient(145deg,#1e362de9,#0b201bfa 78%);box-shadow:0 18px 80px #000b,inset 0 1px #ffffff17;padding:clamp(22px,4vw,38px);text-align:center}.panel::-webkit-scrollbar{width:0;height:0;display:none}.eyebrow{color:#d8c38d;letter-spacing:.25em;font-size:11px;text-transform:uppercase;font-weight:900}.brand{font-family:Georgia,serif;font-size:clamp(40px,9vw,62px);font-weight:950;letter-spacing:-.068em;line-height:.92;color:#f3daab;text-shadow:0 4px #5e3a21,0 12px 26px #0008;margin:18px 0 15px}.sub{color:#b6c7b9;font-size:14px;line-height:1.7;margin:0 auto 26px;max-width:320px}.primary,.secondary{display:block;width:100%;padding:15px 14px;border-radius:13px;font-size:15px;font-weight:900;letter-spacing:.045em;margin-top:10px}.primary{background:linear-gradient(140deg,#dfbd75,#9d6d32);color:#19231b;border:1px solid #fbe2a5;box-shadow:0 4px #5c4725}.secondary{background:#17382d;color:#d9e9db;border:1px solid #4d8b74}.primary:active,.secondary:active{transform:translateY(2px);box-shadow:none}.setting-row{display:flex;align-items:center;justify-content:space-between;gap:12px;text-align:left;margin:12px 0;border:1px solid #ffffff15;background:#0e211c;padding:11px 12px;border-radius:12px;font-size:13px}.setting-row label{font-weight:650;color:#f6e6bc}.setting-row select,.setting-row button{background:#25473b;color:#e7fff3;padding:8px 9px;border:1px solid #618e7c;border-radius:9px;font-size:13px}.credit{margin-top:27px;border-top:1px solid #d4bc8d3b;padding-top:20px;color:#b8bdb0;font-size:12px;letter-spacing:.08em}.credit b{font-size:21px;color:#f1d398;display:block;margin-top:8px;letter-spacing:.03em}#deathDetails{font-size:15px;color:#eecba9;line-height:1.7;margin:15px 0}#error{position:absolute;inset:0;display:none;align-items:center;justify-content:center;background:#0e1814;padding:24px;z-index:50;text-align:center;color:#f8ddb5;font-size:17px;line-height:1.6}@media(min-width:800px){.joystick{opacity:.29}.joystick:hover,.joystick:active{opacity:1}#help{max-width:none;font-size:12px}}@media(max-width:570px){.metric{min-width:58px;gap:5px;padding:6px 7px;font-size:10px}.metric .symbol{font-size:18px}.metric b{font-size:16px}.top{top:calc(8px + env(safe-area-inset-top));left:9px;right:9px}.stats{gap:5px}.menu-btn{width:42px;height:42px}.center-top{top:calc(68px + env(safe-area-inset-top));padding:7px 11px}#objective{font-size:9px}#wave{font-size:10px}.bottom{bottom:calc(28px + env(safe-area-inset-bottom));padding:0 15px}.joystick{width:112px;height:112px}#help{display:none}.action-btn{width:51px;height:51px;font-size:21px}.action-btn.dash{width:66px;height:66px}#interact{bottom:calc(106px + env(safe-area-inset-bottom));font-size:11px}.brand{font-size:48px}}
+
+/* create by LamberthRumpaidus */
+.settings-credit{font-size:12px;color:#cdb88f;margin:-5px 0 19px;letter-spacing:.015em}.settings-credit strong{color:#f5d8a2}
+/* Game logo only on main menu. Authentic L/R branding only in the credit footers; no logos in game. */
+
+#mainPanel .eyebrow{display:none}
+
+#mainPanel .sub{margin-bottom:21px}
+#mainPanel{width:min(485px,100%);background:linear-gradient(140deg,#1a352ddf,#0b201bfa);}
+#gameLogo{display:block;width:min(100%,370px);height:auto;max-height:250px;object-fit:contain;margin:-11px auto 4px;filter:drop-shadow(0 15px 20px #000b)}
+.visually-hidden{position:absolute!important;width:1px!important;height:1px!important;overflow:hidden!important;clip-path:inset(50%);white-space:nowrap}
+.creator-signature{margin-top:23px;padding:14px 4px 0;border-top:1px solid #d4bc8d45;display:flex;align-items:center;justify-content:center;gap:14px;text-align:left}
+.creator-mark{width:96px;height:63px;object-fit:contain;flex-shrink:0;filter:drop-shadow(0 3px 8px #0006)}
+.creator-copy{display:flex;flex-direction:column;gap:5px;min-width:0}
+.creator-copy span{font:800 10px/1.2 system-ui,sans-serif;letter-spacing:.20em;color:#c2b398}
+.creator-copy strong{font:800 14px/1.3 system-ui,sans-serif;color:#f1d8a8;letter-spacing:.012em;overflow-wrap:anywhere}
+.creator-signature-settings{margin-top:23px}
+#settingsPanel{width:min(540px,100%)}
+.bindings{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:12px 0 7px;text-align:left}
+.bind-row{display:flex;align-items:center;justify-content:space-between;gap:7px;background:#102720;border:1px solid #95bb9b33;border-radius:10px;padding:8px;min-width:0;font-size:12px}
+.bind-row span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.keycap{min-width:52px;padding:7px 8px;border:1px solid #d5c08677;border-radius:7px;color:#f3dba0;background:#273f37;font-weight:850;white-space:nowrap}
+#bindingError{font-size:12px;color:#f0bfa2;min-height:20px;text-align:left;line-height:1.35}
+#resetBindingsBtn{border:1px solid #689080;color:#d9e7db;background:transparent;padding:8px 12px;border-radius:9px;font-size:12px;width:100%;margin-bottom:10px}
+#controlsLabel{color:#f1d397;font-size:13px;text-align:left;margin-top:20px;font-weight:900}
+#settingHelp{font-size:11px!important;margin-top:11px!important;margin-bottom:13px!important}
+#touchControls{display:none;pointer-events:none}
+#touchControls .joystick,#touchControls .action-stack{pointer-events:none}
+body.touch-device.touch-active #touchControls .joystick,body.touch-device.touch-active #touchControls .action-stack{pointer-events:auto}
+body.touch-device #touchControls{display:flex;opacity:0;visibility:hidden;transition:opacity .22s ease,visibility 0s linear .22s;pointer-events:none}
+body.touch-device.touch-active #touchControls{opacity:.98;visibility:visible;transition:opacity .18s ease,visibility 0s;pointer-events:none}
+body:not(.touch-device) #touchControls{display:none!important}
+body:not(.touch-device) #menuBtn{display:none}
+body:not(.touch-device) #interact{bottom:25px}
+body.touch-device .action-stack{position:fixed;right:max(16px,env(safe-area-inset-right));bottom:calc(clamp(70px,9dvh,104px) + env(safe-area-inset-bottom));gap:9px;align-items:flex-end}
+body.touch-device .joystick{position:fixed;left:max(16px,env(safe-area-inset-left));bottom:calc(clamp(70px,9dvh,104px) + env(safe-area-inset-bottom));transition:opacity .22s}
+body.touch-device #menuBtn{opacity:0;transition:opacity .25s ease;pointer-events:none}
+body.touch-device.touch-active #menuBtn{opacity:1;pointer-events:auto}
+#help{display:none!important}
+#interact[hidden]{display:none!important}
+#interact{right:50%;transform:translateX(50%);bottom:calc(92px + env(safe-area-inset-bottom));max-width:min(250px,60vw);font-size:12px;opacity:.92}
+.hud-icon{height:22px;width:22px;object-fit:contain;filter:drop-shadow(0 2px 3px #0006)}.action-btn img{height:27px;width:27px;object-fit:contain;pointer-events:none} .action-btn.dash img{height:32px;width:32px}
+.hud .center-top{top:calc(73px + env(safe-area-inset-top));padding:7px 11px;opacity:.7}
+#objective{letter-spacing:.06em}
+@media(max-width:580px){.bindings{grid-template-columns:1fr}.bind-row{font-size:13px}#gameLogo{width:min(100%,292px);max-height:185px;margin:-10px auto 2px}.creator-mark{width:76px;height:49px}.creator-signature{margin-top:15px;padding-top:11px;gap:9px}.creator-copy strong{font-size:12px}.creator-copy span{font-size:9px}.panel{padding:20px 19px}.overlay{padding:15px}.hud-icon{height:22px;width:22px;object-fit:contain;filter:drop-shadow(0 2px 3px #0006)}.action-btn img{height:27px;width:27px;object-fit:contain;pointer-events:none} .action-btn.dash img{height:32px;width:32px}
+.hud .center-top{top:calc(60px + env(safe-area-inset-top))}#interact{bottom:calc(clamp(162px,22dvh,205px) + env(safe-area-inset-bottom));font-size:11px}}
+@media(prefers-reduced-motion:reduce){.overlay,.panel,.action-btn{transition:none!important}}
+
+
+
+/* Contextual action is accessible on touch, but disappears along with virtual controls when idle. */
+body.touch-device:not(.touch-active) #interact{visibility:hidden;opacity:0;pointer-events:none}
+body.touch-device.touch-active #interact:not([hidden]){visibility:visible;opacity:.96;pointer-events:auto}
+
+/* Final mobile viewport and compact menus — keep browser navigation clear. */
+html,body,#app{height:100%;height:100dvh;overscroll-behavior:none}
+#app{position:fixed;inset:0;overflow:hidden}
+.overlay{height:100%;height:100dvh;overflow:hidden}
+.panel{max-height:calc(100dvh - 26px);overscroll-behavior:contain;scrollbar-width:none;-ms-overflow-style:none}
+.panel::-webkit-scrollbar{display:none;width:0;height:0}
+@media(max-height:840px){
+  #gameLogo{max-height:195px;width:min(100%,315px)}
+  #mainPanel .sub{font-size:13px;line-height:1.45;margin-bottom:14px}
+  #mainPanel .primary,#mainPanel .secondary{padding:12px 12px;margin-top:8px}
+  #mainPanel .creator-signature{margin-top:14px;padding-top:10px}
+  #mainPanel .creator-mark{width:73px;height:46px}
+}
+@media(max-height:650px){
+  #gameLogo{max-height:126px;width:min(100%,232px)}
+  #mainPanel{padding:14px 18px}
+  #mainPanel .sub{font-size:12px;line-height:1.34;margin-bottom:9px}
+  #mainPanel .primary,#mainPanel .secondary{padding:9px;margin-top:6px;font-size:12px}
+  #mainPanel .creator-signature{margin-top:9px;padding-top:7px}
+  #mainPanel .creator-mark{width:55px;height:36px}
+}
+@media(max-width:400px){
+  body.touch-device .action-stack{right:max(12px,env(safe-area-inset-right))}
+  body.touch-device .joystick{left:max(12px,env(safe-area-inset-left))}
+  .action-btn{width:48px;height:48px}
+  .action-btn.dash{width:62px;height:62px}
+}
+
+</style></head><body><div id="app"><canvas id="scene" aria-label="LAST ASYLUM 3D"></canvas><div class="hud" id="hud"><div class="top"><button class="menu-btn" id="menuBtn" title="Pause">☰</button><div class="stats"><div class="metric"><span class="symbol"><img class="hud-icon" src="assets/icons/meat.svg" alt=""></span><div><small id="meatLabel">DAGING</small><b id="meatNum">0</b></div></div><div class="metric"><span class="symbol"><img class="hud-icon" src="assets/icons/soup.svg" alt=""></span><div><small id="soupLabel">SUP</small><b id="soupNum">0</b></div></div><div class="metric"><span class="symbol"><img class="hud-icon" src="assets/icons/coin.svg" alt=""></span><div><small id="coinLabel">KOIN</small><b id="coinNum">0</b></div></div></div></div><div class="center-top"><div id="objective">BERBURU · MEMASAK · MENJUAL</div><div id="wave">GELOMBANG 1 · 0 ELIMINASI</div></div><div id="interact" hidden></div><div id="toast"></div><div class="bottom" id="touchControls"><div class="joystick" id="joystick"><div class="joy-mark" id="joymark"></div></div><div class="action-stack"><button class="action-btn" id="attackBtn" title="Serangan manual"><img src="assets/icons/blade.svg" alt="Serang"></button><button class="action-btn dash" id="dashBtn" title="Dash"><img src="assets/icons/dash.svg" alt="Dash"></button></div></div><div class="healthbar"><div id="healthfill"></div></div></div>
+<div class="overlay" id="overlay"><section class="panel" id="mainPanel"><div class="eyebrow">A 3D SURVIVAL EXPERIENCE</div><img src="assets/branding/LAST_ASYLUM_logo.png" id="gameLogo" alt="Logo game LAST ASYLUM"><h1 class="visually-hidden">LAST ASYLUM</h1><p class="sub" id="introText">Berburu dalam hutan yang hidup. Masak 3 daging menjadi sup, layani pelanggan, dan bangun pertahanan markas.</p><button class="primary" id="startBtn">MULAI GAME</button><button class="secondary" id="continueBtn" hidden>LANJUTKAN</button><button class="secondary" id="settingsBtn">SETTING</button><footer class="creator-signature" aria-label="Kredit pengembang"><img src="assets/branding/L_R.png" class="creator-mark" alt="Logo L/R resmi"><div class="creator-copy"><span>CREATED BY</span><strong>LamberthRumpaidus</strong></div></footer></section><section class="panel" id="pausePanel" hidden><div class="eyebrow">PAUSE</div><h2 id="pauseTitle">JEDA PERMAINAN</h2><button class="primary" id="resumeBtn">LANJUTKAN</button><button class="secondary" id="pauseSettingBtn">SETTING</button><button class="secondary" id="restartBtn">MULAI ULANG</button><button class="secondary" id="homeBtn">MENU UTAMA</button></section><section class="panel" id="settingsPanel" hidden><h2 id="settingsTitle">PENGATURAN</h2><div class="setting-row"><label id="languageLabel">Bahasa</label><select id="langSelect"><option value="id">Indonesia</option><option value="en">English</option></select></div><div class="setting-row"><label id="graphicsLabel">Kualitas grafis</label><select id="qualitySelect"><option value="high">Tinggi</option><option value="medium">Sedang</option><option value="low">Ringan</option></select></div><div class="setting-row"><label id="soundLabel">Suara efek</label><button id="soundBtn">AKTIF</button></div><div class="setting-row"><label id="cameraLabel">Mode kamera</label><button id="camBtn">ISOMETRIK</button></div><div id="controlsLabel">KONTROL PC · KLIK UNTUK MENGGANTI</div><div class="bindings" id="bindingList"></div><div id="bindingError" role="status"></div><button type="button" id="resetBindingsBtn">RESET KONTROL</button><p class="sub" id="settingHelp" style="font-size:12px;margin-top:22px">PC: WASD, SPACE dash, E interaksi, F serang manual, R kamera. HP: joystick, tombol dash, serang & interaksi.</p><button class="primary" id="settingsBackBtn">KEMBALI</button><footer class="creator-signature creator-signature-settings" aria-label="Kredit pengembang"><img src="assets/branding/L_R.png" class="creator-mark" alt="Logo L/R resmi"><div class="creator-copy"><span>CREATED BY</span><strong>LamberthRumpaidus</strong></div></footer></section><section class="panel" id="deathPanel" hidden><div class="eyebrow">LAST ASYLUM</div><h1 class="brand" id="deathTitle">GAME OVER</h1><div id="deathDetails"></div><button class="primary" id="againBtn">MAIN LAGI</button><button class="secondary" id="deathHomeBtn">MENU UTAMA</button></section></div><div id="error">Perangkat ini belum mendukung WebGL yang diperlukan untuk game 3D. Coba Chrome atau Edge terbaru dengan akselerasi grafis aktif.</div></div>
+<script defer src="js/core/renderer.js"></script>
+<script defer src="js/scene/world.js"></script>
+<script defer src="js/core/state.js"></script>
+<script defer src="js/entities/enemy.js"></script>
+<script defer src="js/entities/human.js"></script>
+<script defer src="js/gameplay/reset.js"></script>
+<script defer src="js/gameplay/physics.js"></script>
+<script defer src="js/core/effects.js"></script>
+<script defer src="js/gameplay/combat.js"></script>
+<script defer src="js/gameplay/economy.js"></script>
+<script defer src="js/gameplay/update.js"></script>
+<script defer src="js/gameplay/storage.js"></script>
+<script defer src="js/ui/menu.js"></script>
+<script defer src="js/input/controls.js"></script>
+<script defer src="js/models/helpers.js"></script>
+<script defer src="js/models/player.js"></script>
+<script defer src="js/models/enemy.js"></script>
+<script defer src="js/models/human.js"></script>
+<script defer src="js/models/props.js"></script>
+<script defer src="js/scene/draw.js"></script>
+<script defer src="js/main.js"></script></body></html>

@@ -1,0 +1,7 @@
+// create by LamberthRumpaidus
+function addHuman(x,z,role='worker'){return {x,z,role,hp:60,maxHp:60,phase:rnd(0,TAU),heading:0,step:0,alive:true,hit:0,state:role==='customer'?'enter':'work',target:0,served:false}}
+function hitHuman(h){if(!h.alive)return;h.hp-=35;h.hit=.35;sparkle(h.x,1.4,h.z,hex('#ef706b'),9);tone(180,.08,'sawtooth',.012);notify(tr('manHit'));if(h.hp<=0){h.alive=false;drops.push({x:h.x,z:h.z,quantity:3,kind:'tainted',time:0});if(h.role==='customer')customers=customers.filter(c=>c!==h)}}
+function updateHuman(h,dt){if(!h.alive)return;h.hit=Math.max(0,h.hit-dt);if(h.role==='worker'){h.step+=dt*.9;let t=elapsed*.35+h.phase;h.heading=Math.sin(t)*.3;return}
+ if(h.state==='enter'){let tx=h.x>16?15.6:9.4+Math.min(2,customers.filter(c=>c!==h&&c.alive&&c.state==='waiting').length)*1.85;let tz=h.x>16?0:-.5;let dx=tx-h.x,dz=tz-h.z,ll=Math.hypot(dx,dz);if(ll<.55){if(h.x>16){h.x=15.5}else{h.state='waiting'} }else {if(h.x<16&&h.x>13.5&&SELLGATE.open<.68)return;let speed=3.4;h.x+=dx/ll*speed*dt;h.z+=dz/ll*speed*dt;h.heading=Math.atan2(dx,dz);h.step+=dt*speed*3.1}}
+ else if(h.state==='waiting'){let slot=customers.filter(c=>c.alive&&c.state==='waiting').indexOf(h),target=9.4+Math.max(0,slot)*1.85;h.x+=clamp(target-h.x,-dt*2,dt*2);h.step+=dt*.6;h.heading=-Math.PI/2}
+ else if(h.state==='leave'){let dx=72-h.x,dz=0-h.z,ll=Math.hypot(dx,dz);h.x+=dx/ll*3.9*dt;h.z+=dz/ll*3.9*dt;h.heading=Math.atan2(dx,dz);h.step+=dt*12;if(h.x>72)h.alive=false}}

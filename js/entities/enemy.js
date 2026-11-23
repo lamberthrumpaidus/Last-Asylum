@@ -1,0 +1,3 @@
+// create by LamberthRumpaidus
+function spawnMonster(x,z){let hp=45+wave*9;monsters.push({x,z,hp,maxHp:hp,phase:rnd(0,TAU),rot:rnd(0,TAU),speed:rnd(1.65,2.4),idle:rnd(.7,2.5),dir:rnd(0,TAU),attack:0,hit:0,step:0,dead:false,flash:0})}
+function hitMonster(m,damage=30){if(m.dead)return;m.hp-=damage;m.hit=.25;m.flash=.18;hitShake=Math.max(hitShake,.13);sparkle(m.x,1.3,m.z,hex('#f1b27a'),6);tone(170,.07,'sawtooth',.014);if(m.hp<=0){m.dead=true;kills++;let units=3+Math.floor(Math.random()*2);drops.push({x:m.x,z:m.z,quantity:units,kind:'meat',time:0});sparkle(m.x,1.5,m.z,hex('#e0b367'),20);tone(430,.14,'triangle',.023);if(kills>0&&kills%15===0){wave++;notify(tr('newWave'))}}}
