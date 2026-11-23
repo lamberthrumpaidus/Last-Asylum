@@ -1,6 +1,6 @@
 <div align="center">
 
-<img src="assets/last-asylum-logo.svg" alt="Logo LAST ASYLUM" width="520" />
+<img src= "LAST_ASYLUM_logo.png" alt="Logo LAST ASYLUM" width="520" />
 
 **Game survival 3D berbasis browser**
 
