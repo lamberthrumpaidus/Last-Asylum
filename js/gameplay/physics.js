@@ -12,4 +12,11 @@ function collides(x,z,r=.48,forMonster=false){
  return x< -76||x>77||z< -76||z>77;
 }
 function moveEntity(p,dx,dz,r=.48,monster=false){let n=Math.max(1,Math.ceil(Math.hypot(dx,dz)/.23));for(let i=0;i<n;i++){let xx=p.x+dx/n,zz=p.z+dz/n;if(!collides(xx,zz,r,monster)){p.x=xx;p.z=zz}else if(!collides(xx,p.z,r,monster))p.x=xx;else if(!collides(p.x,zz,r,monster))p.z=zz}}
-function updateGates(dt){let openHunter=dist(P.x,P.z,HEROGATE.x,HEROGATE.z)<5.8;let openSeller=dist(P.x,P.z,SELLGATE.x,SELLGATE.z)<5.0||customers.some(h=>h.alive&&dist(h.x,h.z,14,0)<6.6);HEROGATE.open=lerp(HEROGATE.open,openHunter?1:0,Math.min(1,dt*5));SELLGATE.open=lerp(SELLGATE.open,openSeller?1:0,Math.min(1,dt*4));}
+function updateGates(dt){
+ const hunterNear=dist(P.x,P.z,HEROGATE.x,HEROGATE.z)<5.8;
+ const sellerNear=dist(P.x,P.z,SELLGATE.x,SELLGATE.z)<5.0||customers.some(h=>h.alive&&dist(h.x,h.z,14,0)<6.6);
+ if(hunterNear!==Boolean(HEROGATE.activated)){GameAudio.play(hunterNear?'gate_open':'gate_close',{x:-3,z:12,volume:.75});HEROGATE.activated=hunterNear}
+ if(sellerNear!==Boolean(SELLGATE.activated)){GameAudio.play(sellerNear?'gate_open':'gate_close',{x:14,z:0,volume:.75});SELLGATE.activated=sellerNear}
+ HEROGATE.open=lerp(HEROGATE.open,hunterNear?1:0,Math.min(1,dt*5));
+ SELLGATE.open=lerp(SELLGATE.open,sellerNear?1:0,Math.min(1,dt*4));
+}
