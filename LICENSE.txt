@@ -1,0 +1,6 @@
+Copyright (c) 2026 LamberthRumpaidus. All rights reserved.
+
+This source-code starter is intended for the rights holder's own LAST ASYLUM project.
+Third-party packages keep their own licenses (Three.js, Vite, Workbox, etc.).
+Before a commercial release, review dependency licenses and licenses of any imported
+models, textures, music, or fonts.
