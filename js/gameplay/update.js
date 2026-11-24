@@ -12,7 +12,7 @@ function update(dt){if(!running||over)return;elapsed+=dt;clock+=dt;spin+=dt*(7.1
  for(const other of monsters){if(other===m||other.dead)continue;let dd=dist(m.x,m.z,other.x,other.z);if(dd>.01&&dd<1.45){let push=(1.45-dd)*dt*.85,mx=(m.x-other.x)/dd,mz=(m.z-other.z)/dd;if(!collides(m.x+mx*push,m.z+mz*push,.79,true)){m.x+=mx*push;m.z+=mz*push}}}
  }
  // Physical blade damage is checked against the visible rotating weapon ring.
- if(P.attackCD<=0&&!inside(P.x,P.z)){let target=monsters.filter(m=>!m.dead&&dist(P.x,P.z,m.x,m.z)<3.15).sort((a,b)=>dist(P.x,P.z,a.x,a.z)-dist(P.x,P.z,b.x,b.z))[0];if(target){hitMonster(target,31+P.weapon*14);P.attackCD=.32;P.leg+=.2}}
+ if(P.attackCD<=0&&!inside(P.x,P.z)){let target=monsters.filter(m=>!m.dead&&dist(P.x,P.z,m.x,m.z)<3.15).sort((a,b)=>dist(P.x,P.z,a.x,a.z)-dist(P.x,P.z,b.x,b.z))[0];if(target){GameAudio.play('sword',{volume:.60});hitMonster(target,31+P.weapon*14);P.attackCD=.32;P.leg+=.2}}
  for(let d of drops){d.time+=dt;if(dist(d.x,d.z,P.x,P.z)<1.7){if(d.kind==='meat'){P.meat=Math.min(150,P.meat+d.quantity);notify('+'+d.quantity+' '+tr('meat'),.8)}else {P.tainted+=d.quantity;notify(tr('tainted')+' +'+d.quantity)}d.collected=true;sparkle(d.x,1.1,d.z,d.kind==='meat'?C.gold:C.blood,7);GameAudio.play(d.kind==='meat'?'meat_pickup':'civilian_hit',{volume:.72})}}drops=drops.filter(d=>!d.collected&&d.time<95);
  for(let h of civilians)updateHuman(h,dt);for(let h of customers)updateHuman(h,dt);customers=customers.filter(h=>h.alive);
  customerTime-=dt;if(customerTime<=0&&customers.filter(h=>h.alive&&h.state!=='leave').length<3){let h=addHuman(68+rnd(0,5),rnd(-.45,.45),'customer');customers.push(h);GameAudio.play('customer',{x:16,z:0,volume:.5});customerTime=rnd(7,11)}
