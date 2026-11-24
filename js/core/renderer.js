@@ -4,7 +4,39 @@ const $=id=>document.getElementById(id),canvas=$('scene');
 const gl=canvas.getContext('webgl2',{antialias:true,alpha:false,powerPreference:'high-performance',preserveDrawingBuffer:false})||canvas.getContext('webgl',{antialias:true,alpha:false,powerPreference:'high-performance'});
 if(!gl){$('error').style.display='flex';$('overlay').hidden=true;throw new Error('WebGL tidak tersedia di browser ini')}
 const VERT=`precision highp float;attribute vec3 aPos;attribute vec3 aNormal;attribute vec3 aColor;attribute float aBend;uniform mat4 uProj,uView;uniform float uTime;varying vec3 vPos,vNormal,vColor;varying float vFog;void main(){vec3 p=aPos;float wind=sin(uTime*1.55+p.x*.36+p.z*.21)*.14+sin(uTime*.89+p.z*.63)*.085;p.x+=aBend*wind;p.z+=aBend*cos(uTime*1.16+p.x*.30)*.19;vPos=p;vNormal=aNormal;vColor=aColor;vec4 view=uView*vec4(p,1.0);vFog=length(view.xyz);gl_Position=uProj*view;}`;
-const FRAG=`precision highp float;varying vec3 vPos,vNormal,vColor;varying float vFog;uniform vec3 uSun;uniform float uTime;void main(){vec3 n=normalize(vNormal);float key=max(dot(n,normalize(uSun)),0.0);float sky=.10+.15*max(n.y,0.0);float diffuse=.32+key*.64+sky*.65;vec3 albedo=vColor;float ground=1.0-smoothstep(.04,.18,vPos.y);float grain=(sin(vPos.x*2.3+sin(vPos.z*1.9))*sin(vPos.z*2.8))*0.035;albedo*=1.0+grain*ground;vec3 col=albedo*diffuse;float warm=max(0.0,1.0-distance(vPos.xz,vec2(7.0,1.0))/15.0)*.24;float fire=max(0.0,1.0-distance(vPos.xz,vec2(-2.0,-3.8))/9.0)*.24;col+=vec3(1.0,.49,.19)*(warm+fire)*1.35*max(0.0,n.y*.75+.25);float f=clamp(1.0-exp(-pow(vFog/105.0,1.9)),0.0,.68);col=mix(col,vec3(.055,.14,.115),f);col=pow(clamp(col*1.18,0.0,1.0),vec3(.91));gl_FragColor=vec4(col,1.0);}`;
+const FRAG=`precision highp float;
+varying vec3 vPos,vNormal,vColor;
+varying float vFog;
+uniform vec3 uSun;
+uniform float uTime;
+float grain(vec2 p){return fract(sin(dot(p,vec2(12.9898,78.233)))*43758.5453);}
+void main(){
+  vec3 n=normalize(vNormal);
+  vec3 sun=normalize(uSun);
+  float direct=max(0.0,dot(n,sun));
+  float bounce=max(0.0,dot(n,normalize(vec3(-0.55,0.52,-0.40))));
+  float top=max(0.0,n.y);
+  float ground=1.0-smoothstep(0.05,0.18,vPos.y);
+  float irregular=(grain(floor(vPos.xz*3.6))-.5)*.16;
+  float moss=.035*sin(vPos.x*1.57+sin(vPos.z*.81))*sin(vPos.z*2.15);
+  vec3 albedo=vColor*(1.0+ground*(irregular+moss));
+  float ambient=.29+.16*top;
+  float shade=.69*direct+.13*bounce+ambient;
+  float under=.80+.20*smoothstep(.0,1.5,vPos.y);
+  vec3 col=albedo*shade*under;
+  float warm=max(0.0,1.0-distance(vPos.xz,vec2(7.0,1.0))/15.0);
+  float hearth=max(0.0,1.0-distance(vPos.xz,vec2(-2.0,-3.8))/9.0);
+  float lantern=max(0.0,1.0-distance(vPos.xz,vec2(20.0,0.0))/15.0);
+  float flicker=.88+.12*sin(uTime*9.1+vPos.x*.3);
+  col+=vec3(1.0,.51,.24)*(warm*.19+hearth*.28+lantern*.09)*flicker*(.27+.73*top);
+  float shine=pow(max(0.0,dot(reflect(-sun,n),normalize(vec3(.29,.83,.47)))),19.0);
+  col+=vec3(.80,.94,.90)*shine*.12;
+  float mist=clamp(1.0-exp(-pow(vFog/115.0,1.8)),0.0,.70);
+  col=mix(col,vec3(.047,.12,.112),mist);
+  col=col/(col+vec3(.27));
+  col=pow(clamp(col*1.40,0.0,1.0),vec3(.89));
+  gl_FragColor=vec4(col,1.0);
+}`;
 const PVERT=`precision highp float;attribute vec3 aPos;attribute vec4 aColor;uniform mat4 uProj,uView;uniform float uSize;varying vec4 vColor;void main(){vec4 p=uView*vec4(aPos,1.0);gl_Position=uProj*p;gl_PointSize=clamp(uSize*130.0/max(8.0,-p.z),2.0,45.0);vColor=aColor;}`;
 const PFRAG=`precision mediump float;varying vec4 vColor;void main(){float r=length(gl_PointCoord-vec2(.5));float a=smoothstep(.49,.02,r)*vColor.a;gl_FragColor=vec4(vColor.rgb*a,a);}`;
 function compile(type,src){let s=gl.createShader(type);gl.shaderSource(s,src);gl.compileShader(s);if(!gl.getShaderParameter(s,gl.COMPILE_STATUS))throw new Error(gl.getShaderInfoLog(s));return s}
