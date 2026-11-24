@@ -37,5 +37,47 @@ for(let i=0;i<4;i++)m.box(-9.28,3.80,-7.4+i*.95,5.8,.13,.20,hex('#bd8c5f'));
 for(let x of [-12,12]){m.cyl(x,2.5,-10,.14,.14,5,hex('#74583b'),7);m.box(x,4.88,-10,.7,.1,.7,hex('#e1b774'))}
 // Shrub lights along side of the base.
 for(let [x,z] of [[-10,-9],[11,-9],[-11,9],[11,9]])lantern(m,x,z,.70);for(let z of [23,36,48]){lantern(m,-7,z,.66);lantern(m,1,z,.66)}
+// create by LamberthRumpaidus — layered forest floor, mushrooms, rocks and aged ruins.
+// Quality-based density keeps touch devices responsive while adding meaningful scene variety.
+for(let i=0;i<(quality==='low'?36:quality==='medium'?75:135);i++){
+ let x=sr(-65,65),z=sr(-62,63);
+ if(x>-17&&x<17&&z>-15&&z<15)continue;
+ if(x>11&&x<75&&z>-8&&z<8)continue;
+ if(x>-7&&x<1&&z>11&&z<52)continue;
+ let v=sr(.6,1.35);
+ if(i%9<4){
+   // Distinct small mushrooms grouped under the trees, with stems and painted caps.
+   for(let k=0;k<3;k++){
+     let xx=x+sr(-.65,.65),zz=z+sr(-.60,.60),h=sr(.14,.30)*v;
+     m.cyl(xx,h/2,zz,.055*v,.052*v,h,hex('#c3ab82'),6);
+     m.ellipsoid(xx,h+.028,zz,.14*v,.070*v,.14*v,i%2?hex('#b16442'):hex('#9f7652'),4,7);
+     m.ellipsoid(xx,h+.053,zz,.052*v,.009*v,.052*v,hex('#ebcd97'),3,5);
+   }
+ }else if(i%9<7){
+   // A smooth group of ferns rooted in a common darker earth patch.
+   m.ellipsoid(x,.025,z,.60*v,.035,.48*v,hex('#183f32'),3,7);
+   for(let a=0;a<5;a++){
+     let theta=a*TAU/5+sr(-.2,.2),len=sr(.4,.8)*v;
+     m.rod(x,.15,z,x+Math.cos(theta)*len,.36+len*.12,z+Math.sin(theta)*len,.033,hex('#4f8964'),5,1.4);
+     m.ellipsoid(x+Math.cos(theta)*len*.65,.32+len*.10,z+Math.sin(theta)*len*.65,.12,.06,len*.3,hex('#438b60'),3,5,1.2);
+   }
+ }else{
+   // Broken granite stones and moss patches.
+   let xx=x+sr(-.25,.25),zz=z+sr(-.25,.25);
+   m.ellipsoid(xx,.14*v,zz,.45*v,.20*v,.38*v,shade(C.stone,sr(.52,.78)),4,7);
+   m.ellipsoid(xx-.12,.33*v,zz+.09,.26*v,.055,.18*v,hex('#496b52'),3,6);
+ }
+}
+// Low-cost ruined pillars and wooden road markers along the wilderness edge.
+for(const [x,z,rot] of [[-23,-22,.12],[-34,22,-.2],[29,-24,.25],[46,17,-.1],[-40,-28,.15]]){
+ m.box(x,.60,z,1.08,1.20,1.00,hex('#515d56'),rot);
+ m.box(x,1.22,z,1.30,.20,1.25,hex('#8b887c'),rot);
+ m.ellipsoid(x,1.34,z,.68,.08,.55,hex('#385c45'),4,8);
+}
+for(const [x,z] of [[-7,20],[-7,36],[1,24],[1,43],[24,5],[34,-5],[51,5],[59,-5]]){
+ m.cyl(x,.74,z,.13,.12,1.45,hex('#674a37'),7);
+ m.box(x,1.38,z,1.05,.40,.12,hex('#a17b54'));
+ m.box(x,1.39,z+.068,.81,.16,.045,hex('#d8bb80'));
+}
 let buffer=m.compile();bindMesh(staticBuf,buffer);staticCount=m.count;
 }
