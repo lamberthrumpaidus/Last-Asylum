@@ -95,12 +95,13 @@ const GameAudio=(()=>{
   }
   function setEnabled(on){
     muted=!on;
-    if(master&&ctx)master.gain.setTargetAtTime(on?.66:0,ctx.currentTime,.045);
+    const volume=limit(Number(localStorage.getItem('la_volume')||'70')||0,0,100)/100;
+    if(master&&ctx)master.gain.setTargetAtTime(on ? volume*.95 : 0,ctx.currentTime,.045);
   }
   function play(name,opts={}){
     if(muted||(typeof sound==='boolean'&&!sound))return;
     if(!init())return;
-    if(ctx.state!=='running'){ctx.resume().catch(()=>{});return}
+    if(ctx.state!=='running')ctx.resume().catch(()=>{});
     const now=ctx.currentTime,interval=name==='step'?.19:name==='impact'?.065:name==='sword'?.09:name==='gate_open'?.75:name==='cook'?.3:0;
     if(now-(last[name]??-999)<interval)return;
     last[name]=now;
@@ -133,6 +134,7 @@ const GameAudio=(()=>{
     osc.connect(g);g.connect(master);osc.start();osc.stop(at+t);
     osc.onended=()=>{osc.disconnect();g.disconnect()};
   }
+  function setVolume(value){const n=limit(Number(value)||0,0,100)/100;try{localStorage.setItem('la_volume',String(Math.round(n*100)))}catch(e){}if(master&&ctx)master.gain.setTargetAtTime((muted?0:n*.95),ctx.currentTime,.07)}
   function update(runningNow,player){
     if(!ctx||muted)return;
     const now=ctx.currentTime;
@@ -150,5 +152,5 @@ const GameAudio=(()=>{
   };
   document.addEventListener('pointerdown',uiListener,{capture:true,passive:true});
   document.addEventListener('keydown',uiListener,{capture:true});
-  return {unlock,play,update,setEnabled,legacyTone};
+  return {unlock,play,update,setEnabled,setVolume,legacyTone};
 })();
