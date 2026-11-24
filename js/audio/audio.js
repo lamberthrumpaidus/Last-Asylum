@@ -42,7 +42,7 @@ const GameAudio=(()=>{
     return 0;
   }
   function makeBuffer(name){
-    let d=defs[name]||.3,rate=22050,n=Math.round(rate*d),buf=ctx.createBuffer(1,n,rate),v=buf.getChannelData(0);
+    let d=defs[name]||.3,rate=d>5?11025:22050,n=Math.round(rate*d),buf=ctx.createBuffer(1,n,rate),v=buf.getChannelData(0);
     let seed=139+name.length*777,low=0,lp=0;
     for(let i=0;i<n;i++){
       seed=(Math.imul(seed,1664525)+1013904223)>>>0;
