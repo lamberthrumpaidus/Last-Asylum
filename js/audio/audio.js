@@ -5,7 +5,7 @@ const GameAudio=(()=>{
   const AudioClass=window.AudioContext||window.webkitAudioContext;
   const defs={sword:.34,impact:.22,monster_die:.78,meat_pickup:.32,dash:.57,gate_open:1.28,gate_close:.82,cook:1.10,sale:.78,coin:.42,upgrade:1.07,damage:.48,civilian_hit:.50,poison:1.8,menu:.32,wave:1.4,step:.20,forest:13,fire:8,customer:.48,music:16};
   let ctx=null,master=null,reverb=null,compressor=null,buffers=new Map(),loops={},last={},muted=false;
-  let tick=0,activity=false;
+  let tick=0,activity=false,preloadStarted=false;
   const TA=Math.PI*2;
   const limit=(v,a,b)=>Math.min(b,Math.max(a,v));
   function waveform(name,t,d,noise){
@@ -81,16 +81,38 @@ const GameAudio=(()=>{
         src.buffer=buffers.get(k)||makeBuffer(k);buffers.set(k,src.buffer);src.loop=true;
         filter.type='lowpass';filter.frequency.value=k==='fire'?1800:k==='forest'?1250:950;
         gain.gain.value=0;src.connect(filter);filter.connect(gain);gain.connect(master);src.start();
-        loops[k]={src,gain};
+        loops[k]={src,gain,filter};
       }
       document.addEventListener('visibilitychange',()=>{if(ctx){if(document.hidden)ctx.suspend().catch(()=>{});else if(activity)ctx.resume().catch(()=>{})}});
       return true;
     }catch(e){console.warn('Audio unavailable:',e);return false}
   }
+  function preloadAssets(){
+    if(preloadStarted||!ctx)return;
+    preloadStarted=true;
+    // Each WAV is an actual original sound asset in the repository.
+    // Generated AudioBuffers above remain an immediate offline fallback for file:// and slow networks.
+    for(const name of Object.keys(defs)){
+      fetch('assets/audio/'+name+'.wav',{cache:'force-cache'})
+        .then(response=>{if(!response.ok)throw new Error('Sound '+response.status);return response.arrayBuffer()})
+        .then(data=>ctx.decodeAudioData(data))
+        .then(decoded=>{
+          buffers.set(name,decoded);
+          if(loops[name]){
+            const layer=loops[name],replacement=ctx.createBufferSource();
+            replacement.buffer=decoded;replacement.loop=true;
+            replacement.connect(layer.filter);replacement.start();
+            try{layer.src.stop();layer.src.disconnect()}catch(e){}
+            layer.src=replacement;
+          }
+        }).catch(()=>{/* The procedural buffer still plays without a network. */});
+    }
+  }
   function unlock(){
     if(!init())return;
     activity=true;
     if(ctx.state!=='running')ctx.resume().catch(()=>{});
+    preloadAssets();
     setEnabled(typeof sound==='boolean'?sound:true);
   }
   function setEnabled(on){
