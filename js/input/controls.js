@@ -20,7 +20,7 @@ function beginRebind(action){rebinding=action;loadBindingsUI();$('bindingError')
 function commitRebind(action,code){if(['Escape','F5','F11','MetaLeft','MetaRight'].includes(code)){if(code==='Escape'){rebinding=null;loadBindingsUI()}else $('bindingError').textContent='Tombol sistem tidak dapat digunakan.';return false}let other=KEY_ACTIONS.find(name=>name!==action&&keymap[name]===code);if(other){$('bindingError').textContent=(lang==='en'?'Already used by: ':'Sudah dipakai untuk: ')+KEY_NAMES[lang][other];return false}keymap[action]=code;rebinding=null;try{localStorage.setItem(REMAP_STORAGE,JSON.stringify(keymap))}catch(e){}loadBindingsUI();return true}
 $('resetBindingsBtn').onclick=()=>{keymap={...KEY_DEFAULTS};rebinding=null;try{localStorage.setItem(REMAP_STORAGE,JSON.stringify(keymap))}catch(e){}loadBindingsUI()};
 function isDown(action){return keys.has(keymap[action])}
-function dash(){if(!running||P.dashCD>0||P.dash>0)return;let vx=P.lastX??Math.sin(P.face),vz=P.lastZ??Math.cos(P.face);let ll=Math.hypot(vx,vz)||1;P.dashX=vx/ll;P.dashZ=vz/ll;P.dash=.24;P.dashCD=1.4;hitShake=.19;spawnDust(P.x,P.z,C.mint,12);tone(550,.15,'sawtooth',.016)}
+function dash(){if(!running||P.dashCD>0||P.dash>0)return;let vx=P.lastX??Math.sin(P.face),vz=P.lastZ??Math.cos(P.face);let ll=Math.hypot(vx,vz)||1;P.dashX=vx/ll;P.dashZ=vz/ll;P.dash=.24;P.dashCD=1.4;hitShake=.19;spawnDust(P.x,P.z,C.mint,12);GameAudio.play('dash',{volume:.9})}
 $('dashBtn').onclick=dash;$('attackBtn').onclick=manualHit;
 function pauseToggle(){if(mode==='game'){$('menuBtn').click()}else if(mode==='pause'){$('resumeBtn').click()}}
 window.addEventListener('keydown',e=>{
